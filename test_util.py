@@ -51,6 +51,34 @@ class TestGridClass(unittest.TestCase):
         self.assertFalse(test_grid.contains(latitude, longitude))
 
 
+class TestReadGridDefinitions(unittest.TestCase):
+    def test_read_grid_definitions(self):
+        grids = set(
+            util.read_grid_definitions('test_Cambridge_Grid_Coordinates.csv')
+        )
+        print("Grids from CSV:", grids)
+        self.assertEqual(len(grids), 2)
+
+        grid1 = util.Grid(
+            west_bound=-71.161,
+            east_bound=-71.137,
+            north_bound=42.404,
+            south_bound=42.391
+        )
+        grid2 = util.Grid(
+            west_bound=-71.089,
+            east_bound=-71.066,
+            north_bound=42.365,
+            south_bound=42.352
+        )
+
+        print("Grid1:", grid1)
+        print("Grid2:", grid2)
+
+        self.assertTrue(grid1 in grids)
+        self.assertTrue(grid2 in grids)
+
+
 class TestParsingMethods(unittest.TestCase):
 
     def test_parse_coordinates(self):

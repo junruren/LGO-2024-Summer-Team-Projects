@@ -6,6 +6,7 @@
 #
 # Like how we import other packages
 
+import csv
 import re
 
 class Grid:
@@ -50,6 +51,23 @@ class Grid:
             and
             (self.west_bound < longitude and longitude <= self.east_bound)
         )
+
+def read_grid_definitions(csv_filename: str) -> list:
+    """
+    Read the CSV file, identified by the provided `csv_filename` and return a list of Grid objects.
+    """
+    with open(csv_filename, 'r') as csvfile:
+        reader = csv.DictReader(csvfile)
+        results = [
+            Grid(
+                west_bound=float(row['West bound']),
+                east_bound=float(row['East bound']),
+                north_bound=float(row['North bound']),
+                south_bound=float(row['South bound']),
+            )
+            for row in reader
+        ]
+    return results
 
 def parse_coordinates(address: str):
     """
