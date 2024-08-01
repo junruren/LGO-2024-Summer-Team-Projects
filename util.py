@@ -15,6 +15,25 @@ class Grid:
         self.north_bound = north_bound
         self.south_bound = south_bound
 
+    def __repr__(self) -> str:
+        return (f"Grid(west_bound={self.west_bound}, east_bound={self.east_bound}, "
+                f"north_bound={self.north_bound}, south_bound={self.south_bound})")
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, Grid):
+            return NotImplemented
+        return (self.west_bound == other.west_bound and
+                self.east_bound == other.east_bound and
+                self.north_bound == other.north_bound and
+                self.south_bound == other.south_bound)
+
+    def __ne__(self, other) -> bool:
+        return not self.__eq__(other)
+
+    def __hash__(self) -> int:
+        return hash((self.west_bound, self.east_bound, self.north_bound, self.south_bound))
+
+
     def contains(self, latitude: float, longitude: float) -> bool:
         """
         Check if this Grid cell contains the given point, represented by the `latitude` and `longitude`. Return True if
