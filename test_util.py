@@ -1,6 +1,34 @@
 import unittest
 import util
 
+class TestGridClass(unittest.TestCase):
+
+    def test_contains(self):
+        latitude = 42.378741522
+        longitude = -71.110071228
+        # Cell Number 7
+        test_grid = util.Grid(
+            west_bound=-71.113,
+            east_bound=-71.089,
+            north_bound=42.391,
+            south_bound=42.378
+        )
+        self.assertTrue(test_grid.contains(latitude, longitude))
+
+        # north_bound and east_bound are compared *inclusively*
+        latitude = 42.391
+        longitude = -71.089
+        self.assertTrue(test_grid.contains(latitude, longitude))
+        # west_bound is not compared *inclusively*
+        latitude = 42.378741522
+        longitude = -71.113
+        self.assertFalse(test_grid.contains(latitude, longitude))
+        # south_bound is not compared *inclusively*
+        latitude = 42.378
+        longitude = -71.110071228
+        self.assertFalse(test_grid.contains(latitude, longitude))
+
+
 class TestParsingMethods(unittest.TestCase):
 
     def test_parse_coordinates(self):
